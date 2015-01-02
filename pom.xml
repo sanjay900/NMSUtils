@@ -17,6 +17,10 @@
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public</url>
 		</repository>
+		<repository>
+			<id>sanjay900-repo</id>
+			<url>https://ci.eyrenetwork.net/plugin/repository/everything/</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
