@@ -19,7 +19,7 @@
 		</repository>
 		<repository>
 			<id>sanjay900-repo</id>
-			<url>https://ci.eyrenetwork.net/plugin/repository/everything/</url>
+			<url>http://mc.eyrenetwork.net:8080/plugin/repository/everything/</url>
 		</repository>
 	</repositories>
 	<dependencies>
