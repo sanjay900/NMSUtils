@@ -47,6 +47,7 @@
 		</dependency>
 	</dependencies>
 	<modules>
+		<module>nmsUtil-API</module>
 		<module>nmsUtil-v1_8_R1</module>
 		<module>nmsUtil-Plugin</module>
 	</modules>
