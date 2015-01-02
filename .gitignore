@@ -7,7 +7,7 @@ dependency-reduced-pom.xml
 *.jar
 *.war
 *.ear
-
+maven*
 .settings
 .classpath
 .project
