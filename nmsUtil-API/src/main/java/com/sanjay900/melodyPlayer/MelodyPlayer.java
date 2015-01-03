@@ -20,7 +20,7 @@ public class MelodyPlayer implements Runnable {
 
     private final Set<String> toStop, toPlay;
     public MelodyPlayer(File file, boolean loop) throws MidiUnavailableException, InvalidMidiDataException, IOException {
-    	this(new MidiJingleSequencer(file, b));
+    	this(new MidiJingleSequencer(file, loop));
     }
     public MelodyPlayer(MidiJingleSequencer sequencer) {
         this.sequencer = sequencer;
