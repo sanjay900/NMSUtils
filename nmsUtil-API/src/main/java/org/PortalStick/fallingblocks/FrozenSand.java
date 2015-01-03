@@ -39,7 +39,8 @@ public class FrozenSand {
 	public V10Location spawnloc = null;
 	private NMSUtil nmsutil;
 	private Player attachPlayer;
-	protected FrozenSand(final JavaPlugin plugin,Player attachPlayer,NMSUtil nmsutil, Integer storageId, String worldName, double x, double y, double z, int blockid, int blockdata) {
+	private String name;
+	protected FrozenSand(final JavaPlugin plugin,Player attachPlayer,NMSUtil nmsutil, Integer storageId, String worldName, double x, double y, double z, int blockid, int blockdata, String name) {
 		this.nmsutil = nmsutil;
 		this.attachPlayer = attachPlayer;
 		entityId = nmsutil.frozenSandManager.nextId();
@@ -51,6 +52,7 @@ public class FrozenSand {
 		this.worldName = worldName;
 		this.pm = ProtocolLibrary.getProtocolManager();
 		this.storageId = storageId;
+		this.name = name;
 		velocitytask = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable(){
 
 			@Override
@@ -103,6 +105,10 @@ public class FrozenSand {
 			WrappedDataWatcher watcher = new WrappedDataWatcher();
 			watcher.setObject(0, (byte) 32);
 			watcher.setObject(10, i);
+			if (name != null) {
+				watcher.setObject(2, name);
+				watcher.setObject(3, (byte)1);
+			}
 			armourStand.getDataWatcherModifier().write(0,watcher);
 			PacketContainer item = pm.createPacket(PacketType.Play.Server.SPAWN_ENTITY);
 
@@ -129,12 +135,12 @@ public class FrozenSand {
 
 				pm.sendServerPacket(observer, attach3);
 
-			} else {
+			} else if (name == null){
 
 				pm.sendServerPacket(observer, item);
 				pm.sendServerPacket(observer, armourStand2Item);
 			}
-			
+
 		} catch (InvocationTargetException e) {
 		}
 
@@ -165,6 +171,23 @@ public class FrozenSand {
 		}
 
 		return entityIdList;
+	}
+	protected void updateName(Player observer,String name) {
+		if (this.name == null || name == null) return;
+		this.name=name;
+		PacketContainer updateName = pm.createPacket(PacketType.Play.Server.ENTITY_METADATA);
+		StructureModifier<Integer> modifier = updateName.getIntegers();
+		modifier.write(0, getArmourStandIndex());
+		WrappedDataWatcher watcher = new WrappedDataWatcher();
+		watcher.setObject(2, name);
+		watcher.setObject(3, (byte)1);
+		updateName.getDataWatcherModifier().write(0,watcher);
+		try {
+			pm.sendServerPacket(observer, updateName);
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} 
+
 	}
 
 	protected void moveTag(Player observer) {

@@ -22,12 +22,15 @@ public class FrozenSandFactory {
 		private int blockdata = 0;
 		private NMSUtil nmsutil;
 		private Player player = null;
-		
+		private String name = null;
 		public FrozenSandFactory(JavaPlugin plugin, NMSUtil nmsutil) {
 		    this.plugin = plugin;
 		    this.nmsutil = nmsutil;
 		}
-		
+		public FrozenSandFactory withName(String name) {
+		this.name = name;
+			return this;
+		}
 	    private FrozenSandFactory withCoords(double x, double y, double z) {
 	        this.locX = x;
 	        this.locY = y;
@@ -71,7 +74,7 @@ public class FrozenSandFactory {
 	            return null;
 	        }
 	        int id = nmsutil.frozenSandManager.getNextId();
-	        FrozenSand hologram = new FrozenSand(plugin,player,nmsutil, id,this.worldName, this.locX, this.locY, this.locZ, blockid, blockdata);
+	        FrozenSand hologram = new FrozenSand(plugin,player,nmsutil, id,this.worldName, this.locX, this.locY, this.locZ, blockid, blockdata,name);
 	        nmsutil.frozenSandManager.fakeBlocks.put(hologram, new HashSet<UUID>());
 	        for (Player e : world.getPlayers()) {
 	        	nmsutil.frozenSandManager.checkSight(e, null); 
