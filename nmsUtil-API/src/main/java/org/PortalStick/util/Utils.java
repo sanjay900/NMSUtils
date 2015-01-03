@@ -19,13 +19,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 public class Utils {
-	BlockFace[] blockfaces = new BlockFace[] { BlockFace.WEST,
-			BlockFace.NORTH_WEST, BlockFace.NORTH, BlockFace.NORTH_EAST,
-			BlockFace.EAST, BlockFace.SOUTH, BlockFace.SOUTH_WEST,
-			BlockFace.SOUTH_EAST };
-	BlockFace[] blockfacesn = new BlockFace[] { BlockFace.WEST,
-			BlockFace.NORTH, 
-			BlockFace.EAST, BlockFace.SOUTH};
+	
 
 	private int maxLength = 105;
 	public static boolean isSolid(Material type) {
