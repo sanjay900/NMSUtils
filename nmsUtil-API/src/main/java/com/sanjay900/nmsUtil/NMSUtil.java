@@ -9,16 +9,20 @@ import java.util.UUID;
 import org.PortalStick.fallingblocks.FrozenSandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
 import com.sanjay900.nmsUtil.events.EntityMoveEvent;
+import com.sanjay900.nmsUtil.events.PlayerMovedInHologramEvent;
 public class NMSUtil {
 	public final HashMap<UUID,Object> wl = new HashMap<>();
 	public FrozenSandManager frozenSandManager = new FrozenSandManager();
@@ -63,11 +67,24 @@ public class NMSUtil {
 			cubeEnabled = false;
 		}
 	}
-	public NMSUtil()
+	public NMSUtil(Plugin pl)
 	{
 		version = Bukkit.getServer().getClass().getPackage().getName()
 				.split("\\.")[3];
+		ProtocolLibrary.getProtocolManager().addPacketListener(
+				new PacketAdapter(pl, ListenerPriority.NORMAL,
+						PacketType.Play.Client.STEER_VEHICLE) {
+					@Override
+					public void onPacketReceiving(final PacketEvent event) {
+						PacketContainer packet = event.getPacket();
+						final float sideMot = packet.getFloat().read(0);
+						final float forMot = packet.getFloat().read(1);
+						Bukkit.getPluginManager().callEvent(new PlayerMovedInHologramEvent(event.getPlayer(),forMot > 0,forMot < 0,sideMot > 0,sideMot < 0));
+					}
+
+				});
 	}
+	
 	public static void printError(Exception e) {
 		Bukkit.getLogger().severe("NMSUtils has encountered an error while starting. Please send the next few lines to the developer and they will try to fix the problem.");
 		e.printStackTrace();

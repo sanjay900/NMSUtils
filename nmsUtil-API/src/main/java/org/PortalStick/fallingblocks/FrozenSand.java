@@ -38,8 +38,10 @@ public class FrozenSand {
 	private final UUID uuid = UUID.randomUUID();
 	public V10Location spawnloc = null;
 	private NMSUtil nmsutil;
-	protected FrozenSand(final JavaPlugin plugin,NMSUtil nmsutil, Integer storageId, String worldName, double x, double y, double z, int blockid, int blockdata) {
+	private Player attachPlayer;
+	protected FrozenSand(final JavaPlugin plugin,Player attachPlayer,NMSUtil nmsutil, Integer storageId, String worldName, double x, double y, double z, int blockid, int blockdata) {
 		this.nmsutil = nmsutil;
+		this.attachPlayer = attachPlayer;
 		entityId = nmsutil.frozenSandManager.nextId();
 		this.x = x;
 		this.y = y;
@@ -86,22 +88,22 @@ public class FrozenSand {
 		y = Math.floor(y);
 		z = Math.floor(z)+0.5;
 		try {
-			PacketContainer attach2 = pm.createPacket(PacketType.Play.Server.ATTACH_ENTITY);
-			PacketContainer horse = pm.createPacket(PacketType.Play.Server.SPAWN_ENTITY_LIVING);
-			StructureModifier<Integer> modifier = horse.getIntegers();
+			PacketContainer armourStand2Item = pm.createPacket(PacketType.Play.Server.ATTACH_ENTITY);
+			PacketContainer armourStand = pm.createPacket(PacketType.Play.Server.SPAWN_ENTITY_LIVING);
+			StructureModifier<Integer> modifier = armourStand.getIntegers();
 			byte i = Byte.valueOf((byte)0);
 			i &= -5;
 			i = (byte)(i | 8);
 			i = (byte)(i | 1);
 			modifier.write(0, this.getArmourStandIndex());
-			horse.getIntegers().write(1, 30);
-			horse.getIntegers().write(2, floor(x * 32.0D));
-			horse.getIntegers().write(3, floor((y-1.5) * 32.0D));
-			horse.getIntegers().write(4, floor(z * 32.0D));
+			armourStand.getIntegers().write(1, 30);
+			armourStand.getIntegers().write(2, floor(x * 32.0D));
+			armourStand.getIntegers().write(3, floor((y-1.5) * 32.0D));
+			armourStand.getIntegers().write(4, floor(z * 32.0D));
 			WrappedDataWatcher watcher = new WrappedDataWatcher();
 			watcher.setObject(0, (byte) 32);
 			watcher.setObject(10, i);
-			horse.getDataWatcherModifier().write(0,watcher);
+			armourStand.getDataWatcherModifier().write(0,watcher);
 			PacketContainer item = pm.createPacket(PacketType.Play.Server.SPAWN_ENTITY);
 
 			modifier = item.getIntegers();
@@ -111,14 +113,28 @@ public class FrozenSand {
 			modifier.write(3, (int) Math.floor(z * 32.0D));
 			modifier.write(9, 70);
 			modifier.write(10, blockId + (blockData << 12));
-			modifier = attach2.getIntegers();
+			modifier = armourStand2Item.getIntegers();
 			modifier.write(0, 0);
 			modifier.write(1, item.getIntegers().read(0));
-			attach2.getIntegers().write(2,this.getArmourStandIndex());
+			armourStand2Item.getIntegers().write(2,this.getArmourStandIndex());
 
-			pm.sendServerPacket(observer, horse);
-			pm.sendServerPacket(observer, item);
-			pm.sendServerPacket(observer, attach2);
+			pm.sendServerPacket(observer, armourStand);
+			if (attachPlayer != null) {
+				PacketContainer attach3 = pm.createPacket(PacketType.Play.Server.ATTACH_ENTITY);
+				modifier = attach3.getIntegers();
+				modifier.write(0, 0);
+				modifier.write(1, attachPlayer.getEntityId());
+
+				modifier.write(2, armourStand.getIntegers().read(0));
+
+				pm.sendServerPacket(observer, attach3);
+
+			} else {
+
+				pm.sendServerPacket(observer, item);
+				pm.sendServerPacket(observer, armourStand2Item);
+			}
+			
 		} catch (InvocationTargetException e) {
 		}
 
