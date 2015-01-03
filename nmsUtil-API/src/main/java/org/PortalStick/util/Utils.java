@@ -21,7 +21,7 @@ import org.bukkit.util.Vector;
 public class Utils {
 	
 
-	private int maxLength = 105;
+	private static int maxLength = 105;
 	public static boolean isSolid(Material type) {
 		return (type.isSolid() && !type.name().contains("SIGN"));
 	}
@@ -34,7 +34,7 @@ public class Utils {
 			}
 		}, 1L);
 	}
-	public boolean compareLocation(Location l, Location l2) {
+	public static boolean compareLocation(Location l, Location l2) {
 		return (l.getWorld().equals(l2.getWorld())
 				&& l.getX() == l2.getX())
 				&& (l.getY() == l2.getY())
@@ -55,7 +55,7 @@ public class Utils {
 	 *            The data value or -1 if this does not matter.
 	 */
 
-	public void remove(Inventory inv, Material type, int amount,
+	public static void remove(Inventory inv, Material type, int amount,
 			short damage) {
 		ItemStack[] items = inv.getContents();
 		for (int i = 0; i < items.length; i++) {
@@ -77,7 +77,7 @@ public class Utils {
 		inv.setContents(items);
 
 	}
-	public ItemStack getItemData(String itemString)
+	public static ItemStack getItemData(String itemString)
 	{
 		int num;
 		int id;
@@ -97,11 +97,11 @@ public class Utils {
 		id = Integer.parseInt(split[0]);
 		return new ItemStack(id, num, data);
 	}
-	public Vector faceToVector(BlockFace face) {
+	public static Vector faceToVector(BlockFace face) {
 		return new Vector(face.getModX(), face.getModY(), face.getModZ());
 	}
 
-	private String getMaxString(String str) {
+	private static String getMaxString(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			if (str.substring(0, i).length() == maxLength) {
 				if (str.substring(i, i+1) == "")
@@ -112,7 +112,7 @@ public class Utils {
 		}
 		return str;
 	}
-	public void sendMessage(CommandSender player, String msg) {
+	public static void sendMessage(CommandSender player, String msg) {
 		int i;
 		String part;
 		ChatColor lastColor = ChatColor.RESET;
@@ -132,7 +132,7 @@ public class Utils {
 
 
 
-	public ChatColor getLastColor(String str) {
+	public static ChatColor getLastColor(String str) {
 		int i = 0;
 		ChatColor lastColor = ChatColor.RESET;
 		while (i < str.length()-2) {
@@ -144,7 +144,7 @@ public class Utils {
 		}
 		return lastColor;
 	}
-	public Location getSimpleLocation(Location location) {
+	public static Location getSimpleLocation(Location location) {
 		location.setX((double)Math.round(location.getX() * 10) / 10);
 		location.setY((double)Math.round(location.getY() * 10) / 10);
 		location.setZ((double)Math.round(location.getZ() * 10) / 10);
@@ -158,7 +158,7 @@ public class Utils {
 		}
 		return null;
 	}
-	public void setItemNameAndDesc(ItemStack item, String name, String desc) {
+	public static void setItemNameAndDesc(ItemStack item, String name, String desc) {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(name);
 		if(desc != null)
