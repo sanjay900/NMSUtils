@@ -1,35 +1,27 @@
 package com.sanjay900.nmsUtil.events;
 
+import java.util.ArrayList;
+
+import org.PortalStick.util.Button;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class PlayerMovedInHologramEvent extends Event {
 		private static final HandlerList handlers = new HandlerList();
-		private boolean left;
-		private boolean right;
-		private boolean up;
-		private boolean down;
+		private ArrayList<Button> buttons;
 		private Player player;
-		
-		public PlayerMovedInHologramEvent(Player player, boolean up, boolean down, boolean left, boolean right) {
+	
+		public PlayerMovedInHologramEvent(Player player,
+				ArrayList<Button> buttons) {
 			this.player = player;
-			this.up = up;
-			this.down = down;
-			this.left = left;
-			this.right = right;
+			this.buttons = buttons;
 		}
-		public boolean isLeftPressed() {
-			return left;
+		public ArrayList<Button> getButtonsPressed() {
+			return buttons;
 		}
-		public boolean isRightPressed() {
-			return right;
-		}
-		public boolean isUpPressed() {
-			return up;
-		}
-		public boolean isDownPressed() {
-			return down;
+		public Player getPlayer() {
+			return player;
 		}
 
 		public HandlerList getHandlers() {

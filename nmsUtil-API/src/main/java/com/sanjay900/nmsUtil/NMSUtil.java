@@ -2,11 +2,13 @@ package com.sanjay900.nmsUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import org.PortalStick.fallingblocks.FrozenSandManager;
+import org.PortalStick.util.Button;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -79,7 +81,21 @@ public class NMSUtil {
 						PacketContainer packet = event.getPacket();
 						final float sideMot = packet.getFloat().read(0);
 						final float forMot = packet.getFloat().read(1);
-						Bukkit.getPluginManager().callEvent(new PlayerMovedInHologramEvent(event.getPlayer(),forMot > 0,forMot < 0,sideMot > 0,sideMot < 0));
+						ArrayList<Button> buttons = new ArrayList<>();
+						if(sideMot > 0) {
+							buttons.add(Button.LEFT);
+						}
+						
+						if(sideMot < 0) {
+							buttons.add(Button.RIGHT);
+						}
+						if(forMot > 0) {
+							buttons.add(Button.UP);
+						}
+						if(forMot < 0) {
+							buttons.add(Button.DOWN);
+						}
+						Bukkit.getPluginManager().callEvent(new PlayerMovedInHologramEvent(event.getPlayer(),buttons));
 					}
 
 				});
