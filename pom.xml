@@ -14,6 +14,10 @@
 			<url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
 		</repository>
 		<repository>
+			<id>sk89q-repo</id>
+			<url>http://maven.sk89q.com/repo/</url>
+		</repository>
+		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public</url>
 		</repository>
@@ -23,6 +27,19 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<dependency>
+			<groupId>com.sk89q.craftbook</groupId>
+			<artifactId>craftbook</artifactId>
+			<version>LATEST</version>
+			<scope>provided</scope>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<artifactId>bukkit</artifactId>
+					<groupId>org.bukkit</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>com.comphenix.protocol</groupId>
 			<artifactId>ProtocolLib</artifactId>
