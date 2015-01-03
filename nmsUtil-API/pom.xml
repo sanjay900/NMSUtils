@@ -19,4 +19,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	<version>nmsUtil-API</version>
 </project>
