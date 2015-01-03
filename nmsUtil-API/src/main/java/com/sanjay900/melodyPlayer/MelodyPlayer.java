@@ -8,8 +8,9 @@ import java.util.Set;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import com.sk89q.craftbook.util.jinglenote.JingleNoteManager;
-import com.sk89q.craftbook.util.jinglenote.MidiJingleSequencer;
+import com.sk89q.utils.jinglenoteshaded.JingleNoteManager;
+import com.sk89q.utils.jinglenoteshaded.MidiJingleSequencer;
+
 
 public class MelodyPlayer implements Runnable {
 
@@ -67,7 +68,7 @@ public class MelodyPlayer implements Runnable {
                     jNote.stop(player);
                 toStop.clear();
                 for(String player : toPlay) {
-                    jNote.play(player, sequencer, null);
+                    jNote.play(player, sequencer);
                 }
                 toPlay.clear();
 

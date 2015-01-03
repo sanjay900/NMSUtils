@@ -28,19 +28,6 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>com.sk89q.craftbook</groupId>
-			<artifactId>craftbook</artifactId>
-			<version>LATEST</version>
-			<scope>provided</scope>
-			<type>jar</type>
-			<exclusions>
-				<exclusion>
-					<artifactId>bukkit</artifactId>
-					<groupId>org.bukkit</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>com.comphenix.protocol</groupId>
 			<artifactId>ProtocolLib</artifactId>
 			<version>3.6.3-SNAPSHOT</version>
