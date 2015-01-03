@@ -25,6 +25,9 @@ public class Utils {
 	public static boolean isSolid(Material type) {
 		return (type.isSolid() && !type.name().contains("SIGN"));
 	}
+	public static boolean hasName(ItemStack it, String name) {
+		return it.hasItemMeta() && it.getItemMeta().hasDisplayName() && it.getItemMeta().getDisplayName().equals(name);
+	}
 	public static void doInventoryUpdate(final Player player, Plugin plugin) {
 		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 
