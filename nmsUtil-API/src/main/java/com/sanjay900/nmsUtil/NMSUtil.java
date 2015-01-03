@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.PortalStick.fallingblocks.FrozenSandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -19,6 +21,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.sanjay900.nmsUtil.events.EntityMoveEvent;
 public class NMSUtil {
 	public final HashMap<UUID,Object> wl = new HashMap<>();
+	public FrozenSandManager frozenSandManager = new FrozenSandManager();
 	private static String version;
 	private static boolean cubeEnabled = true;
 	private static Class<?> nmsWorld;
@@ -277,7 +280,6 @@ public class NMSUtil {
 		}
 
 	}
-	
 	
 
 }
