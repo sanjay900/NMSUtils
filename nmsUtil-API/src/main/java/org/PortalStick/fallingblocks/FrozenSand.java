@@ -173,6 +173,7 @@ public class FrozenSand {
 	}
 	public void updateName(String name) {
 		if (this.name == null || name == null) return;
+		if (this.name == name) return;
 		this.name=name;
 		PacketContainer updateName = pm.createPacket(PacketType.Play.Server.ENTITY_METADATA);
 		StructureModifier<Integer> modifier = updateName.getIntegers();
