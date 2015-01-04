@@ -87,7 +87,6 @@ public class FrozenSand {
 	}
 	protected void generate(Player observer) {
 		x = Math.floor(x)+0.5;
-		y = Math.floor(y);
 		z = Math.floor(z)+0.5;
 		try {
 			PacketContainer armourStand2Item = pm.createPacket(PacketType.Play.Server.ATTACH_ENTITY);
@@ -181,7 +180,7 @@ public class FrozenSand {
 		WrappedDataWatcher watcher = new WrappedDataWatcher();
 		watcher.setObject(2, name);
 		watcher.setObject(3, (byte)1);
-		updateName.getDataWatcherModifier().write(0,watcher);
+		updateName.getWatchableCollectionModifier().write(0,watcher.getWatchableObjects());
 		for (Player observer: Bukkit.getOnlinePlayers()) {
 		try {
 			pm.sendServerPacket(observer, updateName);
