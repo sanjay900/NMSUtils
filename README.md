@@ -1,4 +1,1 @@
-NMSUtils
-========
-
-A collection of Utils that i use in my plugins.
+Development moved to https://github.com/V10coding/NMSUtils
