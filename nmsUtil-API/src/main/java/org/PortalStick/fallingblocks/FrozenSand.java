@@ -172,7 +172,7 @@ public class FrozenSand {
 
 		return entityIdList;
 	}
-	protected void updateName(Player observer,String name) {
+	public void updateName(String name) {
 		if (this.name == null || name == null) return;
 		this.name=name;
 		PacketContainer updateName = pm.createPacket(PacketType.Play.Server.ENTITY_METADATA);
@@ -182,11 +182,13 @@ public class FrozenSand {
 		watcher.setObject(2, name);
 		watcher.setObject(3, (byte)1);
 		updateName.getDataWatcherModifier().write(0,watcher);
+		for (Player observer: Bukkit.getOnlinePlayers()) {
 		try {
 			pm.sendServerPacket(observer, updateName);
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		} 
+		}
 
 	}
 
